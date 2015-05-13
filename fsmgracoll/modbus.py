@@ -52,8 +52,8 @@ class ModbusTcpAgent(ModbusTcpClient, ModbusAgentClient):
 
     def stop(self):
         # Run forever
-        self._expire += self._interval
         self._expire = self._start + self._interval
+        self._start = self._expire
         self._timeout = time() + 15.0
 
 class ModbusBatchAgent(ModbusBatchClient, ModbusAgentClient):
@@ -74,8 +74,8 @@ class ModbusBatchAgent(ModbusBatchClient, ModbusAgentClient):
 
     def stop(self):
         # Run forever
-        self._expire += self._interval
         self._expire = self._start + self._interval
+        self._start = self._expire
         self._timeout = time() + 15.0
 
 class ModbusRtuAgent(ModbusRtuClient, ModbusAgentClient):
@@ -94,8 +94,8 @@ class ModbusRtuAgent(ModbusRtuClient, ModbusAgentClient):
 
     def stop(self):
         # Run forever
-        self._expire += self._interval
         self._expire = self._start + self._interval
+        self._start = self._expire
         self._timeout = time() + 15.0
 
 class ModbusRealcomAgent(ModbusRealcomClient, ModbusAgentClient):
@@ -116,6 +116,6 @@ class ModbusRealcomAgent(ModbusRealcomClient, ModbusAgentClient):
 
     def stop(self):
         # Run forever
-        self._expire += self._interval
         self._expire = self._start + self._interval
+        self._start = self._expire
         self._timeout = time() + 15.0
