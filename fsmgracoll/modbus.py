@@ -40,6 +40,7 @@ class ModbusTcpAgent(ModbusTcpClient, ModbusAgentClient):
     def __init__(self, agent, host, type, tag, interval, slave, func, regs):
         ModbusTcpClient.__init__(self, host, interval, slave, func, regs)
         ModbusAgentClient.__init__(self, agent, type, tag)
+        self._start = time()
 
     def on_data(self, *args):
         ModbusAgentClient.on_data(self, *args)
@@ -51,13 +52,15 @@ class ModbusTcpAgent(ModbusTcpClient, ModbusAgentClient):
 
     def stop(self):
         # Run forever
-        self._expire = time() + self._interval
+        self._expire += self._interval
+        self._expire = self._start + self._interval
         self._timeout = self._expire + 15.0
 
 class ModbusBatchAgent(ModbusBatchClient, ModbusAgentClient):
     def __init__(self, agent, host, type, tag, interval, slave, func, regs):
         ModbusBatchClient.__init__(self, host, interval, slave, func, regs)
         ModbusAgentClient.__init__(self, agent, type, tag)
+        self._start = time()
 
     def on_data(self, points, response, tm):
         for regnum, data in points:
@@ -71,13 +74,15 @@ class ModbusBatchAgent(ModbusBatchClient, ModbusAgentClient):
 
     def stop(self):
         # Run forever
-        self._expire = time() + self._interval
+        self._expire += self._interval
+        self._expire = self._start + self._interval
         self._timeout = self._expire + 15.0
 
 class ModbusRtuAgent(ModbusRtuClient, ModbusAgentClient):
     def __init__(self, agent, host, type, tag, interval, slave, func, serial, regs):
         ModbusRtuClient.__init__(self, host, interval, slave, func, serial, regs)
         ModbusAgentClient.__init__(self, agent, type, tag)
+        self._start = time()
 
     def on_data(self, *args):
         ModbusAgentClient.on_data(self, *args)
@@ -89,13 +94,15 @@ class ModbusRtuAgent(ModbusRtuClient, ModbusAgentClient):
 
     def stop(self):
         # Run forever
-        self._expire = time() + self._interval
+        self._expire += self._interval
+        self._expire = self._start + self._interval
         self._timeout = self._expire + 15.0
 
 class ModbusRealcomAgent(ModbusRealcomClient, ModbusAgentClient):
     def __init__(self, agent, host, type, tag, interval, slave, func, serial, realcom_port, regs):
         ModbusRealcomClient.__init__(self, host, interval, slave, func, serial, realcom_port, regs)
         ModbusAgentClient.__init__(self, agent, type, tag)
+        self._start = time()
 
     def on_data(self, *args):
         ModbusAgentClient.on_data(self, *args)
@@ -109,5 +116,6 @@ class ModbusRealcomAgent(ModbusRealcomClient, ModbusAgentClient):
 
     def stop(self):
         # Run forever
-        self._expire = time() + self._interval
+        self._expire += self._interval
+        self._expire = self._start + self._interval
         self._timeout = self._expire + 15.0
