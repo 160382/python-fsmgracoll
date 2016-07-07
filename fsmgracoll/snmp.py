@@ -27,9 +27,10 @@ class SnmpUdpAgent(proto.SnmpUdpClient, AgentClient):
 
     def stop(self):
         # Run forever
-        self._expire = self._start + self._interval
+        tm = time()
+        self._expire = max(self._start, tm) + self._interval
         self._start = self._expire
-        self._timeout = time() + 15.0
+        self._timeout = tm + 15.0
         return False
 
     @staticmethod
