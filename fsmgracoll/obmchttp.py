@@ -18,7 +18,7 @@ class OpenBmcHttpAgent(OpenBmcHttpClient, AgentClient):
         metric = point[0].format(**context)
         if len(point) == 2:
             val = float(val) / point[1]
-        self._agent(self._tag[0]+'.'+metric+self._tag[1], val, tm)
+        self._agent(self._tag[0]+'.'+metric+'.'+self._tag[1], val, tm)
 
     def stop(self):
         # Run forever
